@@ -1,6 +1,14 @@
-type ExampleEntity @entity {
+type TokenTransfer @entity {
   id: ID!
-  count: BigInt!
-  owner: Bytes! # address
-  approved: Bytes! # address
+  tokenId: Int!
+  newOwner: Bytes!
+}
+
+type Tokens @entity {
+  id: ID!
+  tokenId: Int!
+  owner: Bytes!
+  _tokenName: String!
+  _price: BigInt!
+  _tokenURI: String!
 }

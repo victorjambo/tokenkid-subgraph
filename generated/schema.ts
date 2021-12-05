@@ -11,31 +11,29 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class ExampleEntity extends Entity {
+export class TokenTransfer extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("count", Value.fromBigInt(BigInt.zero()));
-    this.set("owner", Value.fromBytes(Bytes.empty()));
-    this.set("approved", Value.fromBytes(Bytes.empty()));
+    this.set("newOwner", Value.fromBytes(Bytes.empty()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save ExampleEntity entity without an ID");
+    assert(id != null, "Cannot save TokenTransfer entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save ExampleEntity entity with non-string ID. " +
+        "Cannot save TokenTransfer entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("ExampleEntity", id.toString(), this);
+      store.set("TokenTransfer", id.toString(), this);
     }
   }
 
-  static load(id: string): ExampleEntity | null {
-    return changetype<ExampleEntity | null>(store.get("ExampleEntity", id));
+  static load(id: string): TokenTransfer | null {
+    return changetype<TokenTransfer | null>(store.get("TokenTransfer", id));
   }
 
   get id(): string {
@@ -47,13 +45,69 @@ export class ExampleEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get count(): BigInt {
-    let value = this.get("count");
-    return value!.toBigInt();
+  get tokenId(): i32 {
+    let value = this.get("tokenId");
+    return value!.toI32();
   }
 
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
+  set tokenId(value: i32) {
+    this.set("tokenId", Value.fromI32(value));
+  }
+
+  get newOwner(): Bytes {
+    let value = this.get("newOwner");
+    return value!.toBytes();
+  }
+
+  set newOwner(value: Bytes) {
+    this.set("newOwner", Value.fromBytes(value));
+  }
+}
+
+export class Tokens extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("owner", Value.fromBytes(Bytes.empty()));
+    this.set("_tokenName", Value.fromString(""));
+    this.set("_price", Value.fromBigInt(BigInt.zero()));
+    this.set("_tokenURI", Value.fromString(""));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Tokens entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Tokens entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Tokens", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Tokens | null {
+    return changetype<Tokens | null>(store.get("Tokens", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get tokenId(): i32 {
+    let value = this.get("tokenId");
+    return value!.toI32();
+  }
+
+  set tokenId(value: i32) {
+    this.set("tokenId", Value.fromI32(value));
   }
 
   get owner(): Bytes {
@@ -65,12 +119,30 @@ export class ExampleEntity extends Entity {
     this.set("owner", Value.fromBytes(value));
   }
 
-  get approved(): Bytes {
-    let value = this.get("approved");
-    return value!.toBytes();
+  get _tokenName(): string {
+    let value = this.get("_tokenName");
+    return value!.toString();
   }
 
-  set approved(value: Bytes) {
-    this.set("approved", Value.fromBytes(value));
+  set _tokenName(value: string) {
+    this.set("_tokenName", Value.fromString(value));
+  }
+
+  get _price(): BigInt {
+    let value = this.get("_price");
+    return value!.toBigInt();
+  }
+
+  set _price(value: BigInt) {
+    this.set("_price", Value.fromBigInt(value));
+  }
+
+  get _tokenURI(): string {
+    let value = this.get("_tokenURI");
+    return value!.toString();
+  }
+
+  set _tokenURI(value: string) {
+    this.set("_tokenURI", Value.fromString(value));
   }
 }
