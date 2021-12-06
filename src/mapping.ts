@@ -1,21 +1,14 @@
-import {
-  Minted,
-  TokenTransfered,
-} from "../generated/TokenKidFactory/TokenKidFactory";
-import { Tokens } from "../generated/schema";
+import { Minted } from "../generated/TokenKidFactory/TokenKidFactory";
+import { Token } from "../generated/schema";
 
 export function handleMinted(event: Minted): void {
-  let tokens = new Tokens(event.params.tokenId.toHex());
-  tokens.owner = event.params.owner;
-  tokens._tokenName = event.params._tokenName;
-  tokens._price = event.params._price;
-  tokens._tokenURI = event.params._tokenURI;
-  tokens.save();
-}
-
-// TokenTransfered === Transfer
-export function handleTokenTransfered(event: TokenTransfered): void {
-  let token = new Tokens(event.params.tokenId.toHex());
-  token.owner = event.params.newOwner;
-  token.save();
+  let token = Token.load(event.params.tokenId.toString())
+  if (!token) {
+    let token = new Token(event.params.tokenId.toString());
+    token.owner = event.params.owner;
+    token._tokenName = event.params._tokenName;
+    token._price = event.params._price;
+    token._tokenURI = event.params._tokenURI;
+    token.save();
+  }
 }

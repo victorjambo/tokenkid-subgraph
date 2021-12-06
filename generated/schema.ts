@@ -11,64 +11,12 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class TokenTransfer extends Entity {
+export class Token extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("newOwner", Value.fromBytes(Bytes.empty()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save TokenTransfer entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save TokenTransfer entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("TokenTransfer", id.toString(), this);
-    }
-  }
-
-  static load(id: string): TokenTransfer | null {
-    return changetype<TokenTransfer | null>(store.get("TokenTransfer", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get tokenId(): i32 {
-    let value = this.get("tokenId");
-    return value!.toI32();
-  }
-
-  set tokenId(value: i32) {
-    this.set("tokenId", Value.fromI32(value));
-  }
-
-  get newOwner(): Bytes {
-    let value = this.get("newOwner");
-    return value!.toBytes();
-  }
-
-  set newOwner(value: Bytes) {
-    this.set("newOwner", Value.fromBytes(value));
-  }
-}
-
-export class Tokens extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
+    this.set("tokenId", Value.fromBigInt(BigInt.zero()));
     this.set("owner", Value.fromBytes(Bytes.empty()));
     this.set("_tokenName", Value.fromString(""));
     this.set("_price", Value.fromBigInt(BigInt.zero()));
@@ -77,19 +25,19 @@ export class Tokens extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Tokens entity without an ID");
+    assert(id != null, "Cannot save Token entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save Tokens entity with non-string ID. " +
+        "Cannot save Token entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("Tokens", id.toString(), this);
+      store.set("Token", id.toString(), this);
     }
   }
 
-  static load(id: string): Tokens | null {
-    return changetype<Tokens | null>(store.get("Tokens", id));
+  static load(id: string): Token | null {
+    return changetype<Token | null>(store.get("Token", id));
   }
 
   get id(): string {
@@ -101,13 +49,13 @@ export class Tokens extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get tokenId(): i32 {
+  get tokenId(): BigInt {
     let value = this.get("tokenId");
-    return value!.toI32();
+    return value!.toBigInt();
   }
 
-  set tokenId(value: i32) {
-    this.set("tokenId", Value.fromI32(value));
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
   }
 
   get owner(): Bytes {

@@ -1,12 +1,6 @@
-type TokenTransfer @entity {
+type Token @entity {
   id: ID!
-  tokenId: Int!
-  newOwner: Bytes!
-}
-
-type Tokens @entity {
-  id: ID!
-  tokenId: Int!
+  tokenId: BigInt!
   owner: Bytes!
   _tokenName: String!
   _price: BigInt!
