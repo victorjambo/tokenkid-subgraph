@@ -10,5 +10,9 @@ export function handleMinted(event: Minted): void {
     token._price = event.params._price;
     token._tokenURI = event.params._tokenURI;
     token.save();
+  } else {
+    // @dev Not sure if this work. Intended to fix the update price issue.
+    token._price = event.params._price;
+    token.save();
   }
 }
