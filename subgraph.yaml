@@ -6,7 +6,7 @@ dataSources:
     name: TokenKidFactory
     network: celo-alfajores
     source:
-      address: "0x3BF90f17A0dCA60aDf464d1ac4A8e921f18D8a23"
+      address: "0x97925fE642d1207A53d195DB8ba80FA43f3Af026"
       abi: TokenKidFactory
     mapping:
       kind: ethereum/events
