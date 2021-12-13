@@ -96,6 +96,46 @@ export class Minted__Params {
   }
 }
 
+export class TokenBurned extends ethereum.Event {
+  get params(): TokenBurned__Params {
+    return new TokenBurned__Params(this);
+  }
+}
+
+export class TokenBurned__Params {
+  _event: TokenBurned;
+
+  constructor(event: TokenBurned) {
+    this._event = event;
+  }
+
+  get tokenId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+}
+
+export class TokenChangePrice extends ethereum.Event {
+  get params(): TokenChangePrice__Params {
+    return new TokenChangePrice__Params(this);
+  }
+}
+
+export class TokenChangePrice__Params {
+  _event: TokenChangePrice;
+
+  constructor(event: TokenChangePrice) {
+    this._event = event;
+  }
+
+  get tokenId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get _price(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
 export class TokenTransfered extends ethereum.Event {
   get params(): TokenTransfered__Params {
     return new TokenTransfered__Params(this);
@@ -664,6 +704,36 @@ export class ApproveCall__Outputs {
   _call: ApproveCall;
 
   constructor(call: ApproveCall) {
+    this._call = call;
+  }
+}
+
+export class BurnTokenCall extends ethereum.Call {
+  get inputs(): BurnTokenCall__Inputs {
+    return new BurnTokenCall__Inputs(this);
+  }
+
+  get outputs(): BurnTokenCall__Outputs {
+    return new BurnTokenCall__Outputs(this);
+  }
+}
+
+export class BurnTokenCall__Inputs {
+  _call: BurnTokenCall;
+
+  constructor(call: BurnTokenCall) {
+    this._call = call;
+  }
+
+  get _tokenId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class BurnTokenCall__Outputs {
+  _call: BurnTokenCall;
+
+  constructor(call: BurnTokenCall) {
     this._call = call;
   }
 }

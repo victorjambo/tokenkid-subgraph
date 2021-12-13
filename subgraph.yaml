@@ -6,7 +6,7 @@ dataSources:
     name: TokenKidFactory
     network: celo-alfajores
     source:
-      address: "0x97925fE642d1207A53d195DB8ba80FA43f3Af026"
+      address: "0xd0Ad4A716108d6eF6e2D683865Fde412fAEdC26B"
       abi: TokenKidFactory
     mapping:
       kind: ethereum/events
@@ -20,4 +20,8 @@ dataSources:
       eventHandlers:
         - event: Minted(indexed uint256,indexed address,string,uint256,string)
           handler: handleMinted
+        - event: TokenBurned(indexed uint256)
+          handler: handleTokenBurned
+        - event: TokenChangePrice(indexed uint256,uint256)
+          handler: handleTokenChangePrice
       file: ./src/mapping.ts
