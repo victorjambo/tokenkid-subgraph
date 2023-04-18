@@ -4,9 +4,9 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: TokenKidFactory
-    network: celo-alfajores
+    network: {{network}}
     source:
-      address: "0xd0Ad4A716108d6eF6e2D683865Fde412fAEdC26B"
+      address: "{{address}}"
       abi: TokenKidFactory
     mapping:
       kind: ethereum/events
